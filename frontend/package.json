@@ -1,0 +1,44 @@
+{
+  "devDependencies": {
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.2.1"
+  },
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
+    "@tailwindcss/vite": "^4.2.1",
+    "@vitejs/plugin-react": "^5.1.4",
+    "axios": "^1.13.5",
+    "baseline-browser-mapping": "^2.10.0",
+    "browserslist": "^4.28.1",
+    "caniuse-lite": "^1.0.30001774",
+    "clsx": "^2.1.1",
+    "electron-to-chromium": "^1.5.302",
+    "escalade": "^3.2.0",
+    "fraction.js": "^5.3.4",
+    "framer-motion": "^12.34.3",
+    "lucide-react": "^0.575.0",
+    "nanoid": "^3.3.11",
+    "node-releases": "^2.0.27",
+    "picocolors": "^1.1.1",
+    "postcss-value-parser": "^4.2.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "source-map-js": "^1.2.1",
+    "tailwind-merge": "^3.5.0",
+    "update-browserslist-db": "^1.2.3",
+    "vite": "^7.3.1"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

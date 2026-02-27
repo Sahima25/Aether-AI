@@ -1,0 +1,8 @@
+.env
+.venv/
+node_modules/
+__pycache__/
+chroma_db/
+*.wav
+*.webm
+backend/temp_audio/
