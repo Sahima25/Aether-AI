@@ -4,7 +4,7 @@ import Sidebar from './components/Sidebar';
 import DashboardView from './views/DashboardView';
 import VaultView from './views/VaultView';
 import AnalyticsView from './views/AnalyticsView';
-import AnalyticsView from './views/AnalyticsView';
+
 
 function App() {
     const [activeView, setActiveView] = useState('dashboard');
