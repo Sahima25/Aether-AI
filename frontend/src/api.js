@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create a custom Axios instance
 const api = axios.create({
-    baseURL: 'http://localhost:8005',
+    baseURL: import.meta.env.VITE_API_URL || 'https://your-backend.onrender.com',
     headers: {
         'Content-Type': 'application/json',
     },

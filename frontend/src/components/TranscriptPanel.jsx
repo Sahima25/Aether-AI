@@ -48,11 +48,11 @@ export default function TranscriptPanel({ transcript, isListening, onToggleListe
                 formData.append('file', audioBlob, 'meeting_recording.webm');
 
                 try {
-                    // Update your endpoint to 8005 to match your backend
-                    const response = await axios.post('http://localhost:8005/api/transcribe', formData, {
+                    // Use environment variable or default to the Render URL
+                    const apiUrl = import.meta.env.VITE_API_URL || 'https://your-backend.onrender.com';
+                    const response = await axios.post(`${apiUrl}/api/transcribe`, formData, {
                         headers: {
-                            'Content-Type': 'multipart/form-data',
-                            'Authorization': `Bearer ${token}`
+                            'Content-Type': 'multipart/form-data'
                         }
                     });
 

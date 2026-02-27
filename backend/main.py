@@ -136,7 +136,7 @@ async def root():
     return {"message": "AETHER Backend is Active on Port 8005"}
 
 @app.post("/api/transcribe")
-async def transcribe_audio(file: UploadFile = File(...), current_user: models.User = Depends(get_current_user)):
+async def transcribe_audio(file: UploadFile = File(...), user_id: str = "guest"):
     """
     Handles raw audio blobs from the React frontend, 
     saves them temporarily, and sends them to Groq Whisper.
@@ -172,14 +172,14 @@ async def transcribe_audio(file: UploadFile = File(...), current_user: models.Us
                 pass
 
 @app.post("/process-transcript")
-async def process_transcript(request: TranscriptRequest, current_user: models.User = Depends(get_current_user)):
+async def process_transcript(request: TranscriptRequest, user_id: str = "guest"):
     """
     Takes the text transcript and extracts Action Items using Llama 3.
     """
     try:
         # 1. Memory Sync (ChromaDB)
         if not request.ghost_mode:
-            memory_service.add_memory(request.text, request.meeting_id, current_user.username)
+            memory_service.add_memory(request.text, request.meeting_id, user_id)
         
         # 2. Intelligence Layer (Groq Llama 3)
         # We pass the current date to fix the "null" time issue
@@ -196,13 +196,13 @@ async def process_transcript(request: TranscriptRequest, current_user: models.Us
         return JSONResponse(status_code=500, content={"error": "AI Processing failed"})
 
 @app.get("/api/analytics")
-async def get_analytics(current_user: models.User = Depends(get_current_user)):
+async def get_analytics(user_id: str = "guest"):
     """
     Returns the top 5 recurring themes from all stored meeting memories.
     """
     try:
-        analytics = memory_service.get_analytics(current_user.username)
-        total_meetings = len(memory_service.get_all_memories(current_user.username))
+        analytics = memory_service.get_analytics(user_id)
+        total_meetings = len(memory_service.get_all_memories(user_id))
         analytics["totalMeetings"] = total_meetings
         return analytics
     except Exception as e:
@@ -210,17 +210,17 @@ async def get_analytics(current_user: models.User = Depends(get_current_user)):
         return JSONResponse(status_code=500, content={"error": "Analytics failed"})
 
 @app.get("/flashbacks")
-async def get_flashbacks(query: str, current_user: models.User = Depends(get_current_user)):
+async def get_flashbacks(query: str, user_id: str = "guest"):
     """
     Retrieves meeting memories. If query is 'all', returns every stored memory.
     Otherwise, performs a semantic search.
     """
     try:
         if query == "all":
-            results = memory_service.get_all_memories(current_user.username)
+            results = memory_service.get_all_memories(user_id)
         else:
             # Semantic search returns a list of texts, convert to match the "all" format
-            search_results = memory_service.search_memories(query, current_user.username)
+            search_results = memory_service.search_memories(query, user_id)
             results = [{"text": text, "metadata": {}} for text in search_results]
             
         return {"flashbacks": results}

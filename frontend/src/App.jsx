@@ -4,18 +4,12 @@ import Sidebar from './components/Sidebar';
 import DashboardView from './views/DashboardView';
 import VaultView from './views/VaultView';
 import AnalyticsView from './views/AnalyticsView';
-import LoginView from './views/LoginView';
+import AnalyticsView from './views/AnalyticsView';
 
 function App() {
-    const [token, setToken] = useState(() => localStorage.getItem('aether_token'));
     const [activeView, setActiveView] = useState('dashboard');
 
-    if (!token) {
-        return <LoginView setToken={setToken} />;
-    }
-
     const handleLogout = () => {
-        setToken(null);
         localStorage.removeItem('aether_token');
     };
 
